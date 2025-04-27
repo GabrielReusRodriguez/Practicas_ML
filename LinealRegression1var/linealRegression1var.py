@@ -32,10 +32,9 @@ df_articles = pd.read_csv(
 #df_articles.drop(['Title', 'url', 'Elapsed days'], axis = 'columns').hist(ax= ax)
 #df_articles.drop(['Title', 'url', 'Elapsed days'], axis = 'columns').hist()
 # Nos quedamos con la mayoria de datos
-#plt.show()
+
 
 df_filtered_data = df_articles[(df_articles['Word count'] <= 3500) & (df_articles['# Shares'] <= 80000)]
-#plt.show()
 
 colores = ['orange', 'blue']
 tamanios = [30,60]
