@@ -64,6 +64,9 @@ print(f"Mean squared error : \n {mean_squared_error(z_train, z_pred):.2f}")
 # Cuanto mas cerca de 1 mejor.
 print(f"Variance score : \n {r2_score(z_train, z_pred):.2f}")
 
+# Prediccion 
+print(f"Num shares previsto: {int(regr2.predict([[2000,10+4+6]]))}")
+
 # Visualizamos los datos en 3D
 fig = plt.figure()
 ax = fig.add_subplot(111, projection = '3d')
