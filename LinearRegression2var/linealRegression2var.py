@@ -8,6 +8,7 @@ from sklearn import  linear_model
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error,  r2_score
 
+from mpl_toolkits.mplot3d import Axes3D
 
 from sklearn.preprocessing import StandardScaler
 
@@ -58,7 +59,43 @@ z_pred = regr2.predict(XY_train)
 print(f"Coeficientes: \n {regr2.coef_}")
 
 # Calculamos el rendimiento
+# Error cuadrativo medio, cuanto menos , mejor.
 print(f"Mean squared error : \n {mean_squared_error(z_train, z_pred):.2f}")
+# Cuanto mas cerca de 1 mejor.
 print(f"Variance score : \n {r2_score(z_train, z_pred):.2f}")
-print(f"Scores : \n {regr2.score(z_train, z_pred)}")
 
+# Visualizamos los datos en 3D
+fig = plt.figure()
+ax = fig.add_subplot(111, projection = '3d')
+#ax = Axes3D(fig)
+
+# Creamos la malla sobre la que haremos el grafico del plano.
+
+xx, yy = np.meshgrid(np.linspace(0, 3500, num = 10), np.linspace(0,60,num=10))
+
+# Calculamos los valores del plano para los puntos x e y
+nuevoX = (regr2.coef_[0] * xx)
+nuevoY = (regr2.coef_[1] * yy)
+
+# Calculamos los valores para la coordenada z.
+
+z = (nuevoX + nuevoY + regr2.intercept_)
+#z = (regr2.coef_[0] * xx  + regr2.coef_[1] * yy + regr2.intercept_)
+
+# Tenemos generado el plano ya que tenemos x, y,z asi que lo graficamos.
+# Esta superficie es la  generaliza la nube de puntos.
+ax.plot_surface(xx,yy,z, alpha = 0.2, cmap = 'hot')
+
+# graficamos los puntos en 3D
+
+ax.scatter(XY_train[:,0], XY_train[:,1], z_train, c='blue', s=30 )
+
+#Situamos la camara  (azim es el angulo)
+ax.view_init(elev=30., azim = 65)
+
+ax.set_xlabel('Cantidad de Palabras')
+ax.set_ylabel('Cantidad de enlaces, comentarios e imagenes')
+ax.set_zlabel('Compartido en redes')
+ax.set_title('Regresion lineal con multiples variables')
+
+plt.show()
