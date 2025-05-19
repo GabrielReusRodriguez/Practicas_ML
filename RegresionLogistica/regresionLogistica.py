@@ -51,6 +51,7 @@ seed = 7
 X_train, X_validation, y_train, y_validation = model_selection.train_test_split(X, y, test_size=validation_size, random_state=seed)
 
 name= 'Logistic Regression'
+# Kfold se usa dividir los datos en entreno y test para poder usar el validador cruzado.
 #kfold = model_selection.KFold(n_splits=10, random_state=seed)
 kfold = model_selection.KFold(n_splits=10)
 cv_results = model_selection.cross_val_score(model, X_train, y_train, cv=kfold, scoring='accuracy')
